@@ -27,6 +27,7 @@ class ChatRoom extends React.Component {
   render() {
     const { people, messages } = this.state;
     const { partyInfo } = this.props;
+    const socket = io();
     return (
       <div className="container">
         <div className="row">
