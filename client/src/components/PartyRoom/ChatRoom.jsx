@@ -12,6 +12,14 @@ class ChatRoom extends React.Component {
       message: '',
       messages: [],
     };
+    this.sendMessage = ev => {
+      ev.preventDefault();
+      // this.socket.emit('SEND_MESSAGE', {
+      //   author: this.state.username,
+      //   message: this.state.message
+      // });
+      this.setState({ message: '' });
+    }
   }
 
   render() {
@@ -37,9 +45,11 @@ class ChatRoom extends React.Component {
 
               <div className="row">
                 <div className="messages-box col-md-12">
-                  {messages.map((message) =>
-                    <div className="message" key={message.id}>{message.message}</div>
-                  )}
+                  {this.state.messages.map(message => {
+                    return (
+                      <div>{message.message}</div>
+                    )
+                  })}
                 </div>
               </div>
 
@@ -48,8 +58,11 @@ class ChatRoom extends React.Component {
                   <div className="form-group">
                     {/* changed for to className inside of label tag */}
                     <label className="send-a-message"></label>
-                    <input type="email" className="form-control" id="exampleInputEmail1" placeholder="howdy!"></input>
-                    <button type="button" className="btn btn-primary btn-lg btn-block">Send Message</button>
+                    <input type="text"
+                      className="form-control"
+                      placeholder="enter message"
+                      value={this.state.message}
+                      onChange={ev => this.setState({ message: ev.target.value })}></input>
                     <button onClick={this.sendMessage} className="btn btn-primary form-control">Send</button>
                   </div>
                 </div>
