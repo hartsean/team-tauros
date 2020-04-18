@@ -14,11 +14,11 @@ class ChatRoom extends React.Component {
     this.getMessages = this.getMessages.bind(this);
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.getMessages();
   }
 
-  getMessages(){
+  getMessages() {
     axios.get('/api/chatRoom')
       .then((response) => this.setState({ messages: response.data }))
       .catch((error) => { throw error; });
@@ -28,20 +28,23 @@ class ChatRoom extends React.Component {
     const { people, messages } = this.state;
     const { partyInfo } = this.props;
     const socket = io();
+    socket.on('message', message => {
+      console.log(message);
+    })
     return (
       <div className="container">
         <div className="row">
           <div className="chatRoomContainer col-md-8">
-            <ChatBoard messages={messages} partyInfo={partyInfo}/>
+            <ChatBoard messages={messages} partyInfo={partyInfo} />
           </div>
           <div className="chatPeopleListContainer col-md-4">
             <ChatPeopleList people={people} />
           </div>
           <Link to={{ pathname: '/parties' }}>
-          <button
-            type="button"
-            className="btn btn-primary"
-          >Leave Party</button>
+            <button
+              type="button"
+              className="btn btn-primary"
+            >Leave Party</button>
           </Link>
         </div>
       </div>

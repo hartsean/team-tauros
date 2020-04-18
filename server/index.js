@@ -10,8 +10,9 @@ const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
 
-io.on('connection',socket => {
+io.on('connection', socket => {
   console.log('new connection made!');
+  socket.emit('message', 'welcome to chatroom');
 });
 
 const PORT = process.env.RDS_PORT || 8080;
